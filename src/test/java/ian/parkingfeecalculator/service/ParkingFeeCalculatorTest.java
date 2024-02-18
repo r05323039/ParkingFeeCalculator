@@ -17,20 +17,31 @@ class ParkingFeeCalculatorTest {
 
     @Test
     void below_15_mins_free() {
-        LocalDateTime start = LocalDateTime.of(2024,1,1,0,0,0);
-        LocalDateTime end = LocalDateTime.of(2024,1,1,0,14,59);
+        LocalDateTime start = LocalDateTime.of(2024, 1, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2024, 1, 1, 0, 14, 59);
 
         long actual = sut.getFee(start, end);
 
         assertEquals(0, actual);
     }
+
     @Test
     void _15_mins_fee_30() {
-        LocalDateTime start = LocalDateTime.of(2024,1,1,0,0,0);
-        LocalDateTime end = LocalDateTime.of(2024,1,1,0,15,0);
+        LocalDateTime start = LocalDateTime.of(2024, 1, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2024, 1, 1, 0, 15, 0);
 
         long actual = sut.getFee(start, end);
 
         assertEquals(30, actual);
+    }
+
+    @Test
+    void _30_mins_fee_60() {
+        LocalDateTime start = LocalDateTime.of(2024, 1, 1, 0, 0, 0);
+        LocalDateTime end = LocalDateTime.of(2024, 1, 1, 0, 30, 0);
+
+        long actual = sut.getFee(start, end);
+
+        assertEquals(60, actual);
     }
 }

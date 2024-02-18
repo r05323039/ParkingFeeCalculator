@@ -6,8 +6,10 @@ import java.time.LocalDateTime;
 public class ParkingFeeCalculator {
     public long getFee(LocalDateTime start, LocalDateTime end) {
         Duration duration = Duration.between(start, end);
-        if (duration.minusMinutes(15).isNegative())
+        long minutes = duration.toMinutes();
+        long intervalAmount = minutes / 15;
+        if (intervalAmount < 1)
             return 0;
-        return 30;
+        return intervalAmount * 30;
     }
 }
