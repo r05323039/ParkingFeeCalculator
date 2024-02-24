@@ -96,19 +96,31 @@ class ParkingFeeCalculatorTest {
     }
 
     @Test
+    void partial_day_and_whole_day() {
+        given_parking_start("2024-01-02T23:50:00");
+        given_parking_end("2024-01-04T00:00:00");
+        calculate_fee();
+        assert_fee_is(30+150);
+    }
+
+    @Test
+    void whole_day_and_partial_day() {
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-03T00:10:00");
+        calculate_fee();
+        assert_fee_is(150+30);
+    }
+
+    @Test
+    void parital_day_and_partial_day() {
+        given_parking_start("2024-01-02T01:00:00");
+        given_parking_end("2024-01-03T01:10:00");
+        calculate_fee();
+        assert_fee_is(150+90);
+    }
+    @Test
     void test() {
-        Duration totalDuration = Duration.ofHours(40);
-
-        // 1天的Duration
-        Duration oneDay = Duration.ofDays(1);
-
-        // 使用dividedBy方法计算完整的"日"区间
-        long days = totalDuration.dividedBy(oneDay);
-
-        // 计算剩余的Duration
-        Duration remainingDuration = totalDuration.minus(oneDay.multipliedBy(days));
-
-        System.out.println("总天数: " + days);
-        System.out.println("剩余时间: " + remainingDuration);
+        LocalDateTime start = LocalDateTime.parse("2024-01-01T00:00:00");
+        System.out.println(start.toLocalDate().atStartOfDay());
     }
 }
