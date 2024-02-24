@@ -43,30 +43,30 @@ class ParkingFeeCalculatorTest {
     @Test
     void below_15_mins_free() {
         given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:14:59");
+        given_parking_end("2024-01-01T00:15:00");
         calculate_fee();
         assert_fee_is(0);
     }
 
     @Test
-    void _15_mins_fee_30() {
+    void over_15_mins_fee_30() {
         given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:15:00");
+        given_parking_end("2024-01-01T00:15:01");
         calculate_fee();
         assert_fee_is(30);
     }
     @Test
-    void _30_mins_fee_60() {
+    void over_30_mins_fee_60() {
         given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:30:00");
+        given_parking_end("2024-01-01T00:30:01");
         calculate_fee();
         assert_fee_is(60);
     }
 
     @Test
-    void _60_mins_fee_90() {
+    void over_60_mins_fee_90() {
         given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T01:00:00");
+        given_parking_end("2024-01-01T01:00:01");
         calculate_fee();
         assert_fee_is(90);
     }
