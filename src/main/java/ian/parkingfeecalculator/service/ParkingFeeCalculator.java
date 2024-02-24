@@ -17,18 +17,20 @@ public class ParkingFeeCalculator {
         if (isFreeInterval(duration)) {
             return fee;
         }
-        fee = getRegularFee(duration);
 
-        return Math.min(fee, 150);
+        long parkingDays = duration.dividedBy(Duration.ofDays(1));
+        Duration remainingDuration = duration.minus(Duration.ofDays(1).multipliedBy(parkingDays));
+        fee = 150 * parkingDays + getRegularFee(remainingDuration);
+
+        return fee;
     }
 
     private long getRegularFee(Duration duration) {
-        long fee;
-        long interval = BigDecimal.valueOf(duration.toNanos())
+        long intervals = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
-        fee = interval * 30;
-        return fee;
+        long fee = intervals * 30;
+        return Math.min(fee, 150);
     }
 
     private boolean isFreeInterval(Duration duration) {

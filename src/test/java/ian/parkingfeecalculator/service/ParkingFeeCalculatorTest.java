@@ -3,8 +3,7 @@ package ian.parkingfeecalculator.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,6 +57,13 @@ class ParkingFeeCalculatorTest {
         assert_fee_is(30);
     }
     @Test
+    void _30_mins_fee_30() {
+        given_parking_start("2024-01-01T00:00:00");
+        given_parking_end("2024-01-01T00:30:00");
+        calculate_fee();
+        assert_fee_is(30);
+    }
+    @Test
     void over_30_mins_fee_60() {
         given_parking_start("2024-01-01T00:00:00");
         given_parking_end("2024-01-01T00:30:01");
@@ -79,5 +85,30 @@ class ParkingFeeCalculatorTest {
         given_parking_end("2024-01-01T23:59:59");
         calculate_fee();
         assert_fee_is(150);
+    }
+
+    @Test
+    void over_one_day() {
+        given_parking_start("2024-01-01T00:00:00");
+        given_parking_end("2024-01-02T00:00:01");
+        calculate_fee();
+        assert_fee_is(180);
+    }
+
+    @Test
+    void test() {
+        Duration totalDuration = Duration.ofHours(40);
+
+        // 1天的Duration
+        Duration oneDay = Duration.ofDays(1);
+
+        // 使用dividedBy方法计算完整的"日"区间
+        long days = totalDuration.dividedBy(oneDay);
+
+        // 计算剩余的Duration
+        Duration remainingDuration = totalDuration.minus(oneDay.multipliedBy(days));
+
+        System.out.println("总天数: " + days);
+        System.out.println("剩余时间: " + remainingDuration);
     }
 }
