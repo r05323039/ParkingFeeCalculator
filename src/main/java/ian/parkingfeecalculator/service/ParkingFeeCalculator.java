@@ -24,14 +24,14 @@ public class ParkingFeeCalculator {
             LocalDateTime tomorrowStart = todayStart.plusDays(1);
             LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ? end : tomorrowStart;
 
-            fee += getRegularFee(Duration.between(intervalStart, intervalEnd));
+            fee += getRegularFeeDuringOnyDay(Duration.between(intervalStart, intervalEnd));
 
-            todayStart = todayStart.plusDays(1);
+            todayStart = tomorrowStart;
         }
         return fee;
     }
 
-    private long getRegularFee(Duration duration) {
+    private long getRegularFeeDuringOnyDay(Duration duration) {
         long intervals = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
