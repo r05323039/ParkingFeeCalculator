@@ -13,27 +13,27 @@ public class ParkingFeeCalculator {
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
 
     public long getFee(ParkingInterval parkingInterval) {
-        Duration duration = Duration.between(parkingInterval.start(), parkingInterval.end());
+        Duration duration = Duration.between(parkingInterval.getStart(), parkingInterval.getEnd());
         if (isFreeInterval(duration)) {
             return 0;
         }
 
-        List<Duration> durations = getDurations(parkingInterval.start(), parkingInterval.end(), );
+        List<Duration> durations = getDurations(parkingInterval);
 
         long fee = durations.stream().mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
     }
 
-    private List<Duration> getDurations(LocalDateTime start, LocalDateTime end, ParkingInterval parkingInterval) {
+    private List<Duration> getDurations(ParkingInterval parkingInterval) {
         List<Duration> durations = new ArrayList<>();
-        LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
-        while (todayStart.isBefore(end)) {
+        LocalDateTime todayStart = parkingInterval.getStart().toLocalDate().atStartOfDay();
+        while (todayStart.isBefore(parkingInterval.getEnd())) {
             LocalDateTime tomorrowStart = todayStart.plusDays(1);
 
-            LocalDateTime intervalStart = start.isAfter(todayStart) ?
-                    start : todayStart;
-            LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ?
-                    end : tomorrowStart;
+            LocalDateTime intervalStart = parkingInterval.getStart().isAfter(todayStart) ?
+                    parkingInterval.getStart() : todayStart;
+            LocalDateTime intervalEnd = parkingInterval.getEnd().isBefore(tomorrowStart) ?
+                    parkingInterval.getEnd() : tomorrowStart;
 
             Duration dailyDuration = Duration.between(intervalStart, intervalEnd);
             durations.add(dailyDuration);
