@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ParkingFeeCalculator {
 
@@ -17,6 +19,7 @@ public class ParkingFeeCalculator {
             return fee;
         }
 
+        ArrayList<Duration> durations = new ArrayList<>();
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         while (todayStart.isBefore(end)) {
             LocalDateTime tomorrowStart = todayStart.plusDays(1);
@@ -26,12 +29,12 @@ public class ParkingFeeCalculator {
             LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ?
                     end : tomorrowStart;
 
-            Duration todayDuration = Duration.between(intervalStart, intervalEnd);
-            long todayFee = getRegularFeeDuringOnyDay(todayDuration);
-            fee += todayFee;
-
+            Duration dailyDuration = Duration.between(intervalStart, intervalEnd);
+            durations.add(dailyDuration);
             todayStart = tomorrowStart;
         }
+
+        fee = durations.stream().mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
     }
 
