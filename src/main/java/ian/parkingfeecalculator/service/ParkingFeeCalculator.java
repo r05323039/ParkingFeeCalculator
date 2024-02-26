@@ -6,26 +6,25 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ParkingFeeCalculator {
 
     private final Duration _15_MINUTES = Duration.ofMinutes(15);
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
 
-    public long getFee(LocalDateTime start, LocalDateTime end) {
-        Duration duration = Duration.between(start, end);
+    public long getFee(ParkingInterval parkingInterval) {
+        Duration duration = Duration.between(parkingInterval.start(), parkingInterval.end());
         if (isFreeInterval(duration)) {
             return 0;
         }
 
-        List<Duration> durations = getDurations(start, end);
+        List<Duration> durations = getDurations(parkingInterval.start(), parkingInterval.end(), );
 
         long fee = durations.stream().mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
     }
 
-    private List<Duration> getDurations(LocalDateTime start, LocalDateTime end) {
+    private List<Duration> getDurations(LocalDateTime start, LocalDateTime end, ParkingInterval parkingInterval) {
         List<Duration> durations = new ArrayList<>();
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         while (todayStart.isBefore(end)) {

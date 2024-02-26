@@ -1,9 +1,9 @@
 package ian.parkingfeecalculator.service;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +38,7 @@ class ParkingFeeCalculatorTest {
     }
 
     private void calculate_fee() {
-        actual = sut.getFee(start, end);
+        actual = sut.getFee(new ParkingInterval(start, end));
     }
 
     @Test
@@ -119,6 +119,7 @@ class ParkingFeeCalculatorTest {
         assert_fee_is(150+90);
     }
     @Test
+    @Disabled
     void test() {
         LocalDateTime start = LocalDateTime.parse("2024-01-01T00:00:00");
         System.out.println(start.toLocalDate().atStartOfDay());
