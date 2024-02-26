@@ -3,8 +3,6 @@ package ian.parkingfeecalculator.service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ParkingFeeCalculator {
@@ -13,33 +11,15 @@ public class ParkingFeeCalculator {
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
 
     public long getFee(ParkingInterval parkingInterval) {
-        Duration duration = Duration.between(parkingInterval.getStart(), parkingInterval.getEnd());
+        Duration duration = parkingInterval.getTotalDuration();
         if (isFreeInterval(duration)) {
             return 0;
         }
 
-        List<Duration> durations = getDurations(parkingInterval);
+        List<Duration> durations = parkingInterval.getDailyDurations();
 
         long fee = durations.stream().mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
-    }
-
-    private List<Duration> getDurations(ParkingInterval parkingInterval) {
-        List<Duration> durations = new ArrayList<>();
-        LocalDateTime todayStart = parkingInterval.getStart().toLocalDate().atStartOfDay();
-        while (todayStart.isBefore(parkingInterval.getEnd())) {
-            LocalDateTime tomorrowStart = todayStart.plusDays(1);
-
-            LocalDateTime intervalStart = parkingInterval.getStart().isAfter(todayStart) ?
-                    parkingInterval.getStart() : todayStart;
-            LocalDateTime intervalEnd = parkingInterval.getEnd().isBefore(tomorrowStart) ?
-                    parkingInterval.getEnd() : tomorrowStart;
-
-            Duration dailyDuration = Duration.between(intervalStart, intervalEnd);
-            durations.add(dailyDuration);
-            todayStart = tomorrowStart;
-        }
-        return durations;
     }
 
     private long getRegularFeeDuringOnyDay(Duration duration) {
