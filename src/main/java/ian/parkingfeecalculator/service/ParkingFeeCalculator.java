@@ -19,12 +19,16 @@ public class ParkingFeeCalculator {
 
         LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
         while (todayStart.isBefore(end)) {
-            LocalDateTime intervalStart = start.isAfter(todayStart) ? start : todayStart;
-
             LocalDateTime tomorrowStart = todayStart.plusDays(1);
-            LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ? end : tomorrowStart;
 
-            fee += getRegularFeeDuringOnyDay(Duration.between(intervalStart, intervalEnd));
+            LocalDateTime intervalStart = start.isAfter(todayStart) ?
+                    start : todayStart;
+            LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ?
+                    end : tomorrowStart;
+
+            Duration todayDuration = Duration.between(intervalStart, intervalEnd);
+            long todayFee = getRegularFeeDuringOnyDay(todayDuration);
+            fee += todayFee;
 
             todayStart = tomorrowStart;
         }
