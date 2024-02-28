@@ -10,6 +10,7 @@ public class ParkingFeeCalculator {
 
     private final Duration _15_MINUTES = Duration.ofMinutes(15);
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
+    private final Calendar calendar = new Calendar();
 
     public long getFee(ParkingInterval parkingInterval) {
         Duration duration = parkingInterval.getTotalDuration();
@@ -31,7 +32,7 @@ public class ParkingFeeCalculator {
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
 
-        boolean isHoliday = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(dailySession.getToday().getDayOfWeek());
+        boolean isHoliday = calendar.isHoliday(dailySession.getToday());
         long feePerHalfHour = isHoliday ? 50 : 30;
         long todayFee = intervals * feePerHalfHour;
 
