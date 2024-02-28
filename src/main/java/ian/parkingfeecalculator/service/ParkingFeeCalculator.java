@@ -33,9 +33,9 @@ public class ParkingFeeCalculator {
 
         boolean isHoliday = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(dailySession.getToday().getDayOfWeek());
         long feePerHalfHour = isHoliday ? 50 : 30;
-
         long todayFee = intervals * feePerHalfHour;
-        return Math.min(todayFee, 150);
+
+        return isHoliday ? Math.min(todayFee, 2400) : Math.min(todayFee, 150);
     }
 
     private boolean isFreeInterval(Duration duration) {

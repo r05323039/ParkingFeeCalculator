@@ -140,4 +140,11 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(50);
     }
+    @Test
+    void holiday_ceiling_fee_2400() {
+        given_parking_start("2024-01-06T00:00:00");
+        given_parking_end("2024-01-07T00:00:00");
+        calculate_fee();
+        assert_fee_is(2400);
+    }
 }
