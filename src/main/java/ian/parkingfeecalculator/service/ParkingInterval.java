@@ -25,8 +25,8 @@ public class ParkingInterval {
             LocalDateTime intervalEnd = end.isBefore(tomorrow) ?
                     end : tomorrow;
 
-            Duration dailyDuration = Duration.between(intervalStart, intervalEnd);
-            dailySessions.add(new DailySession(dailyDuration,today));
+            Duration todayDuration = Duration.between(intervalStart, intervalEnd);
+            dailySessions.add(new DailySession(todayDuration,today));
             today = tomorrow;
         }
         return dailySessions;

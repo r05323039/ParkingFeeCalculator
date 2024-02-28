@@ -19,7 +19,7 @@ public class ParkingFeeCalculator {
         List<DailySession> durations = parkingInterval.getDailyDurations();
 
         long fee = durations.stream()
-                .map(DailySession::getDailyDuration)
+                .map(DailySession::getTodayDuration)
                 .mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
     }

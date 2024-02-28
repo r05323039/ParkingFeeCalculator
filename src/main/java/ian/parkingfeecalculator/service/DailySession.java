@@ -9,6 +9,6 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class DailySession {
-    private final Duration dailyDuration;
+    private final Duration todayDuration;
     private final LocalDateTime today;
 }
