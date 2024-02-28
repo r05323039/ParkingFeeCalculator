@@ -14,22 +14,22 @@ public class ParkingInterval {
     private final LocalDateTime start;
     private final LocalDateTime end;
 
-    public List<Duration> getDailyDurations() {
-        List<Duration> durations = new ArrayList<>();
-        LocalDateTime todayStart = start.toLocalDate().atStartOfDay();
-        while (todayStart.isBefore(end)) {
-            LocalDateTime tomorrowStart = todayStart.plusDays(1);
+    public List<DailySession> getDailyDurations() {
+        List<DailySession> dailySessions = new ArrayList<>();
+        LocalDateTime today = start.toLocalDate().atStartOfDay();
+        while (today.isBefore(end)) {
+            LocalDateTime tomorrow = today.plusDays(1);
 
-            LocalDateTime intervalStart = start.isAfter(todayStart) ?
-                    start : todayStart;
-            LocalDateTime intervalEnd = end.isBefore(tomorrowStart) ?
-                    end : tomorrowStart;
+            LocalDateTime intervalStart = start.isAfter(today) ?
+                    start : today;
+            LocalDateTime intervalEnd = end.isBefore(tomorrow) ?
+                    end : tomorrow;
 
             Duration dailyDuration = Duration.between(intervalStart, intervalEnd);
-            durations.add(dailyDuration);
-            todayStart = tomorrowStart;
+            dailySessions.add(new DailySession(dailyDuration,today));
+            today = tomorrow;
         }
-        return durations;
+        return dailySessions;
     }
 
     public Duration getTotalDuration() {
