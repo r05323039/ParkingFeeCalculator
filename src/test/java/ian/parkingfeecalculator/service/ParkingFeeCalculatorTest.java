@@ -56,6 +56,7 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(30);
     }
+
     @Test
     void _30_mins_fee_30() {
         given_parking_start("2024-01-01T00:00:00");
@@ -123,5 +124,13 @@ class ParkingFeeCalculatorTest {
     void test() {
         LocalDateTime start = LocalDateTime.parse("2024-01-01T00:00:00");
         System.out.println(start.toLocalDate().atStartOfDay());
+    }
+
+    @Test
+    void saturday_over_15_mins_fee_50() {
+        given_parking_start("2024-01-06T00:00:00");
+        given_parking_end("2024-01-06T00:15:01");
+        calculate_fee();
+        assert_fee_is(50);
     }
 }
