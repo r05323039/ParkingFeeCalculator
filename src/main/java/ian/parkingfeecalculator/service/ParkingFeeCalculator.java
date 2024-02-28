@@ -17,11 +17,11 @@ public class ParkingFeeCalculator {
             return 0;
         }
 
-        List<DailySession> durations = parkingInterval.getDailyDurations();
+        List<DailySession> dailySessions = parkingInterval.getDailySessions();
 
-        long fee = durations.stream()
+        long totalFee = dailySessions.stream()
                 .mapToLong(this::getRegularFeeDuringOnyDay).sum();
-        return fee;
+        return totalFee;
     }
 
     private long getRegularFeeDuringOnyDay(DailySession dailySession) {
@@ -30,12 +30,12 @@ public class ParkingFeeCalculator {
         long intervals = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
-        
+
         boolean isHoliday = DayOfWeek.SATURDAY == dailySession.getToday().getDayOfWeek();
         long feePerHalfHour = isHoliday ? 50 : 30;
 
-        long fee = intervals * feePerHalfHour;
-        return Math.min(fee, 150);
+        long todayFee = intervals * feePerHalfHour;
+        return Math.min(todayFee, 150);
     }
 
     private boolean isFreeInterval(Duration duration) {

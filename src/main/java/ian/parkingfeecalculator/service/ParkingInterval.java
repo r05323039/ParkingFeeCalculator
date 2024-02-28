@@ -14,7 +14,7 @@ public class ParkingInterval {
     private final LocalDateTime start;
     private final LocalDateTime end;
 
-    public List<DailySession> getDailyDurations() {
+    public List<DailySession> getDailySessions() {
         List<DailySession> dailySessions = new ArrayList<>();
         LocalDateTime today = start.toLocalDate().atStartOfDay();
         while (today.isBefore(end)) {
