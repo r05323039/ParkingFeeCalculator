@@ -31,7 +31,7 @@ public class ParkingFeeCalculator {
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
 
-        boolean isHoliday = DayOfWeek.SATURDAY == dailySession.getToday().getDayOfWeek();
+        boolean isHoliday = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(dailySession.getToday().getDayOfWeek());
         long feePerHalfHour = isHoliday ? 50 : 30;
 
         long todayFee = intervals * feePerHalfHour;

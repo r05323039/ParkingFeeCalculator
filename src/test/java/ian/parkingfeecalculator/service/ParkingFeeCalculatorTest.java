@@ -133,4 +133,11 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(50);
     }
+    @Test
+    void sunday_over_15_mins_fee_50() {
+        given_parking_start("2024-01-07T00:00:00");
+        given_parking_end("2024-01-07T00:15:01");
+        calculate_fee();
+        assert_fee_is(50);
+    }
 }
