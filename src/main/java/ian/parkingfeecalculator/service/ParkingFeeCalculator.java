@@ -2,6 +2,7 @@ package ian.parkingfeecalculator.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.util.List;
 
@@ -19,16 +20,21 @@ public class ParkingFeeCalculator {
         List<DailySession> durations = parkingInterval.getDailyDurations();
 
         long fee = durations.stream()
-                .map(DailySession::getTodayDuration)
                 .mapToLong(this::getRegularFeeDuringOnyDay).sum();
         return fee;
     }
 
-    private long getRegularFeeDuringOnyDay(Duration duration) {
+    private long getRegularFeeDuringOnyDay(DailySession dailySession) {
+        Duration duration = dailySession.getTodayDuration();
+
         long intervals = BigDecimal.valueOf(duration.toNanos())
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
-        long fee = intervals * 30;
+        
+        boolean isHoliday = DayOfWeek.SATURDAY == dailySession.getToday().getDayOfWeek();
+        long feePerHalfHour = isHoliday ? 50 : 30;
+
+        long fee = intervals * feePerHalfHour;
         return Math.min(fee, 150);
     }
 
