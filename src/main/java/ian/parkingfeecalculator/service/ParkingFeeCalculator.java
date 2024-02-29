@@ -10,7 +10,11 @@ public class ParkingFeeCalculator {
 
     private final Duration _15_MINUTES = Duration.ofMinutes(15);
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
-    private final Calendar calendar = new Calendar();
+    private final CalendarRepository calendarRepository;
+
+    public ParkingFeeCalculator(CalendarRepository calendarRepository) {
+        this.calendarRepository = calendarRepository;
+    }
 
     public long getFee(ParkingInterval parkingInterval) {
         Duration duration = parkingInterval.getTotalDuration();
@@ -32,7 +36,7 @@ public class ParkingFeeCalculator {
                 .divide(BigDecimal.valueOf(_30_MINUTES.toNanos())
                         , 0, RoundingMode.UP).longValue();
 
-        boolean isHoliday = calendar.isHoliday(dailySession.getToday());
+        boolean isHoliday = calendarRepository.getCalendar().isHoliday(dailySession.getToday());
         long feePerHalfHour = isHoliday ? 50 : 30;
         long todayFee = intervals * feePerHalfHour;
 

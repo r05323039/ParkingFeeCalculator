@@ -22,7 +22,7 @@ class ParkingFeeCalculatorTest {
 
     @BeforeEach
     void setUp() {
-        sut = new ParkingFeeCalculator();
+        sut = new ParkingFeeCalculator(new CalendarRepository());
     }
 
     private void assert_fee_is(int expected) {
