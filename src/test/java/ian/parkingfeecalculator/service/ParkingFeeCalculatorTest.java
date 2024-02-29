@@ -1,5 +1,6 @@
 package ian.parkingfeecalculator.service;
 
+import ian.parkingfeecalculator.service.calendar.TaiwanCalendarRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -22,7 +23,7 @@ class ParkingFeeCalculatorTest {
 
     @BeforeEach
     void setUp() {
-        sut = new ParkingFeeCalculator(new CalendarRepository());
+        sut = new ParkingFeeCalculator(new TaiwanCalendarRepository());
     }
 
     private void assert_fee_is(int expected) {
