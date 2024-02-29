@@ -43,55 +43,55 @@ class ParkingFeeCalculatorTest {
 
     @Test
     void below_15_mins_free() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:15:00");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T00:15:00");
         calculate_fee();
         assert_fee_is(0);
     }
 
     @Test
     void over_15_mins_fee_30() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:15:01");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T00:15:01");
         calculate_fee();
         assert_fee_is(30);
     }
 
     @Test
     void _30_mins_fee_30() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:30:00");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T00:30:00");
         calculate_fee();
         assert_fee_is(30);
     }
     @Test
     void over_30_mins_fee_60() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T00:30:01");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T00:30:01");
         calculate_fee();
         assert_fee_is(60);
     }
 
     @Test
     void over_60_mins_fee_90() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T01:00:01");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T01:00:01");
         calculate_fee();
         assert_fee_is(90);
     }
 
     @Test
     void regular_ceiling_fee_150() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-01T23:59:59");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-02T23:59:59");
         calculate_fee();
         assert_fee_is(150);
     }
 
     @Test
     void over_one_day() {
-        given_parking_start("2024-01-01T00:00:00");
-        given_parking_end("2024-01-02T00:00:01");
+        given_parking_start("2024-01-02T00:00:00");
+        given_parking_end("2024-01-03T00:00:01");
         calculate_fee();
         assert_fee_is(180);
     }
@@ -122,7 +122,7 @@ class ParkingFeeCalculatorTest {
     @Test
     @Disabled
     void test() {
-        LocalDateTime start = LocalDateTime.parse("2024-01-01T00:00:00");
+        LocalDateTime start = LocalDateTime.parse("2024-01-02T00:00:00");
         System.out.println(start.toLocalDate().atStartOfDay());
     }
 
@@ -143,9 +143,9 @@ class ParkingFeeCalculatorTest {
     @Test
     void national_holiday_over_15_mins_fee_50() {
         given_parking_start("2024-02-28T00:00:00");
-        given_parking_end("2024-02-29T00:15:01");
+        given_parking_end("2024-02-28T00:15:01");
         calculate_fee();
-        assert_fee_is(2400);
+        assert_fee_is(50);
     }
     @Test
     void holiday_ceiling_fee_2400() {

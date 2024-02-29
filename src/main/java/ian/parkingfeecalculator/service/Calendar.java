@@ -12,6 +12,11 @@ public class Calendar {
     boolean isHoliday(LocalDate today) {
 
         Set<LocalDate> nationalHolidays = new HashSet<>();
-        return List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
+        nationalHolidays.add(LocalDate.parse("2024-01-01"));
+        nationalHolidays.add(LocalDate.parse("2024-02-28"));
+
+        boolean isNationalHolidays = nationalHolidays.contains(today);
+        boolean isWeekend = List.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY).contains(today.getDayOfWeek());
+        return isWeekend || isNationalHolidays;
     }
 }
