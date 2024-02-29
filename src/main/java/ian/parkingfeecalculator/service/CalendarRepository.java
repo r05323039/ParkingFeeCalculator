@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class CalendarRepository {
-    private Calendar calendar = new Calendar();
+    private TaiwanCalendar calendar = new TaiwanCalendar();
 }

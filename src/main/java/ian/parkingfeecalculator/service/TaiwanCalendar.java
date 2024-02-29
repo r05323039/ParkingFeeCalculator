@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Calendar {
+public class TaiwanCalendar {
     private Set<LocalDate> nationalHolidays = new HashSet<>();
 
-    public Calendar() {
+    public TaiwanCalendar() {
         nationalHolidays.add(LocalDate.parse("2024-01-01"));
         nationalHolidays.add(LocalDate.parse("2024-02-28"));
     }
