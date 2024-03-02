@@ -18,8 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ParkingFeeCalculatorTest {
     private final ParkingIntervalRepository intervalRepository = new ParkingIntervalRepository();
     private ParkingFeeCalculator sut;
-    private LocalDateTime start;
-    private LocalDateTime end;
     private long actual;
 
     @BeforeEach
@@ -32,14 +30,12 @@ class ParkingFeeCalculatorTest {
     }
 
     private void given_parking_start(String startText) {
-        start = LocalDateTime.parse(startText);
-        intervalRepository.save(new ParkingInterval(start, null));
+        intervalRepository.save(new ParkingInterval(LocalDateTime.parse(startText), null));
     }
 
     private void given_parking_end(String endText) {
-        end = LocalDateTime.parse(endText);
         ParkingInterval interval = intervalRepository.find();
-        interval.setEnd(end);
+        interval.setEnd(LocalDateTime.parse(endText));
         intervalRepository.save(interval);
     }
 
