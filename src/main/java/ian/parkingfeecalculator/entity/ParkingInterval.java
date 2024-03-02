@@ -1,4 +1,4 @@
-package ian.parkingfeecalculator.service;
+package ian.parkingfeecalculator.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,6 +37,4 @@ public class ParkingInterval {
     public Duration getTotalDuration() {
         return Duration.between(start, end);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package ian.parkingfeecalculator.service;
+package ian.parkingfeecalculator.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

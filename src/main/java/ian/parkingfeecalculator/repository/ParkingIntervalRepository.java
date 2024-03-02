@@ -1,4 +1,6 @@
-package ian.parkingfeecalculator.service;
+package ian.parkingfeecalculator.repository;
+
+import ian.parkingfeecalculator.entity.ParkingInterval;
 
 public class ParkingIntervalRepository {
     private ParkingInterval parkingInterval;

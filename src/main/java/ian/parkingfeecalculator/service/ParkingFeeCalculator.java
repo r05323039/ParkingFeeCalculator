@@ -1,6 +1,9 @@
 package ian.parkingfeecalculator.service;
 
-import ian.parkingfeecalculator.service.calendar.CalendarRepository;
+import ian.parkingfeecalculator.repository.ParkingIntervalRepository;
+import ian.parkingfeecalculator.repository.CalendarRepository;
+import ian.parkingfeecalculator.entity.DailySession;
+import ian.parkingfeecalculator.entity.ParkingInterval;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

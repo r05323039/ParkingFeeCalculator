@@ -1,6 +1,8 @@
 package ian.parkingfeecalculator.service;
 
-import ian.parkingfeecalculator.service.calendar.TaiwanCalendarRepository;
+import ian.parkingfeecalculator.repository.ParkingIntervalRepository;
+import ian.parkingfeecalculator.repository.TaiwanCalendarRepository;
+import ian.parkingfeecalculator.entity.ParkingInterval;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
