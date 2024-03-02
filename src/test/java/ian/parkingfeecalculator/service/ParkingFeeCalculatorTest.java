@@ -31,13 +31,16 @@ class ParkingFeeCalculatorTest {
         assertEquals(expected, actual);
     }
 
-    private void given_parking_end(String endText) {
-        end = LocalDateTime.parse(endText);
-        intervalRepository.save(new ParkingInterval(start, end));
-    }
-
     private void given_parking_start(String startText) {
         start = LocalDateTime.parse(startText);
+        intervalRepository.save(new ParkingInterval(start, null));
+    }
+
+    private void given_parking_end(String endText) {
+        end = LocalDateTime.parse(endText);
+        ParkingInterval interval = intervalRepository.find();
+        interval.setEnd(end);
+        intervalRepository.save(interval);
     }
 
     private void calculate_fee() {

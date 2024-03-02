@@ -1,7 +1,7 @@
 package ian.parkingfeecalculator.service;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.time.Duration;
 import java.time.LocalDate;
@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ParkingInterval {
     private final LocalDateTime start;
-    private final LocalDateTime end;
+    private LocalDateTime end;
 
     public List<DailySession> getDailySessions() {
         List<DailySession> dailySessions = new ArrayList<>();
@@ -37,4 +37,6 @@ public class ParkingInterval {
     public Duration getTotalDuration() {
         return Duration.between(start, end);
     }
+
+
 }
