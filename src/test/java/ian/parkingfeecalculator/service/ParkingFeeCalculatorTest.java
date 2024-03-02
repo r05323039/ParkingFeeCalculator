@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 當日上限150 / 2400 (隔日另計)
  */
 class ParkingFeeCalculatorTest {
+    private final ParkingIntervalRepository intervalRepository = new ParkingIntervalRepository();
     private ParkingFeeCalculator sut;
     private LocalDateTime start;
     private LocalDateTime end;
@@ -23,7 +24,7 @@ class ParkingFeeCalculatorTest {
 
     @BeforeEach
     void setUp() {
-        sut = new ParkingFeeCalculator(new TaiwanCalendarRepository());
+        sut = new ParkingFeeCalculator(new TaiwanCalendarRepository(), intervalRepository);
     }
 
     private void assert_fee_is(int expected) {
@@ -32,6 +33,7 @@ class ParkingFeeCalculatorTest {
 
     private void given_parking_end(String endText) {
         end = LocalDateTime.parse(endText);
+        intervalRepository.save(new ParkingInterval(start, end));
     }
 
     private void given_parking_start(String startText) {
@@ -39,7 +41,7 @@ class ParkingFeeCalculatorTest {
     }
 
     private void calculate_fee() {
-        actual = sut.getFee(new ParkingInterval(start, end));
+        actual = sut.getFee();
     }
 
     @Test
@@ -65,6 +67,7 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(30);
     }
+
     @Test
     void over_30_mins_fee_60() {
         given_parking_start("2024-01-02T00:00:00");
@@ -102,7 +105,7 @@ class ParkingFeeCalculatorTest {
         given_parking_start("2024-01-02T23:50:00");
         given_parking_end("2024-01-04T00:00:00");
         calculate_fee();
-        assert_fee_is(30+150);
+        assert_fee_is(30 + 150);
     }
 
     @Test
@@ -110,7 +113,7 @@ class ParkingFeeCalculatorTest {
         given_parking_start("2024-01-02T00:00:00");
         given_parking_end("2024-01-03T00:10:00");
         calculate_fee();
-        assert_fee_is(150+30);
+        assert_fee_is(150 + 30);
     }
 
     @Test
@@ -118,8 +121,9 @@ class ParkingFeeCalculatorTest {
         given_parking_start("2024-01-02T01:00:00");
         given_parking_end("2024-01-03T01:10:00");
         calculate_fee();
-        assert_fee_is(150+90);
+        assert_fee_is(150 + 90);
     }
+
     @Test
     @Disabled
     void test() {
@@ -134,6 +138,7 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(50);
     }
+
     @Test
     void sunday_over_15_mins_fee_50() {
         given_parking_start("2024-01-07T00:00:00");
@@ -141,6 +146,7 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(50);
     }
+
     @Test
     void national_holiday_over_15_mins_fee_50() {
         given_parking_start("2024-02-28T00:00:00");
@@ -148,6 +154,7 @@ class ParkingFeeCalculatorTest {
         calculate_fee();
         assert_fee_is(50);
     }
+
     @Test
     void holiday_ceiling_fee_2400() {
         given_parking_start("2024-01-06T00:00:00");

@@ -1,7 +1,6 @@
 package ian.parkingfeecalculator.service;
 
 import ian.parkingfeecalculator.service.calendar.CalendarRepository;
-import ian.parkingfeecalculator.service.calendar.TaiwanCalendarRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -13,12 +12,16 @@ public class ParkingFeeCalculator {
     private final Duration _15_MINUTES = Duration.ofMinutes(15);
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
     private final CalendarRepository calendarRepository;
+    private final ParkingIntervalRepository parkingIntervalRepository;
 
-    public ParkingFeeCalculator(CalendarRepository calendarRepository) {
+    public ParkingFeeCalculator(CalendarRepository calendarRepository, ParkingIntervalRepository repository) {
         this.calendarRepository = calendarRepository;
+        this.parkingIntervalRepository = repository;
     }
 
-    public long getFee(ParkingInterval parkingInterval) {
+    public long getFee() {
+        ParkingInterval parkingInterval = parkingIntervalRepository.find();
+
         Duration duration = parkingInterval.getTotalDuration();
         if (isFreeInterval(duration)) {
             return 0;
