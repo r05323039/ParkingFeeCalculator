@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ParkingInterval {
+public class ParkingSession {
     private final LocalDateTime start;
     private LocalDateTime end;
 

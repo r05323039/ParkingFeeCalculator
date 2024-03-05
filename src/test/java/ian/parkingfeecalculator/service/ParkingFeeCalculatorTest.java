@@ -1,8 +1,8 @@
 package ian.parkingfeecalculator.service;
 
-import ian.parkingfeecalculator.repository.ParkingIntervalRepository;
+import ian.parkingfeecalculator.repository.ParkingSessionRepository;
 import ian.parkingfeecalculator.repository.TaiwanCalendarRepository;
-import ian.parkingfeecalculator.entity.ParkingInterval;
+import ian.parkingfeecalculator.entity.ParkingSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * 當日上限150 / 2400 (隔日另計)
  */
 class ParkingFeeCalculatorTest {
-    private final ParkingIntervalRepository intervalRepository = new ParkingIntervalRepository();
+    private final ParkingSessionRepository intervalRepository = new ParkingSessionRepository();
     private ParkingFeeCalculator sut;
     private long actual;
 
@@ -32,11 +32,11 @@ class ParkingFeeCalculatorTest {
     }
 
     private void given_parking_start(String startText) {
-        intervalRepository.save(new ParkingInterval(LocalDateTime.parse(startText), null));
+        intervalRepository.save(new ParkingSession(LocalDateTime.parse(startText), null));
     }
 
     private void given_parking_end(String endText) {
-        ParkingInterval interval = intervalRepository.find();
+        ParkingSession interval = intervalRepository.find();
         interval.setEnd(LocalDateTime.parse(endText));
         intervalRepository.save(interval);
     }

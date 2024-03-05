@@ -1,9 +1,9 @@
 package ian.parkingfeecalculator.service;
 
-import ian.parkingfeecalculator.repository.ParkingIntervalRepository;
+import ian.parkingfeecalculator.repository.ParkingSessionRepository;
 import ian.parkingfeecalculator.repository.CalendarRepository;
 import ian.parkingfeecalculator.entity.DailySession;
-import ian.parkingfeecalculator.entity.ParkingInterval;
+import ian.parkingfeecalculator.entity.ParkingSession;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,22 +15,22 @@ public class ParkingFeeCalculator {
     private final Duration _15_MINUTES = Duration.ofMinutes(15);
     private final Duration _30_MINUTES = Duration.ofMinutes(30);
     private final CalendarRepository calendarRepository;
-    private final ParkingIntervalRepository parkingIntervalRepository;
+    private final ParkingSessionRepository parkingSessionRepository;
 
-    public ParkingFeeCalculator(CalendarRepository calendarRepository, ParkingIntervalRepository repository) {
+    public ParkingFeeCalculator(CalendarRepository calendarRepository, ParkingSessionRepository repository) {
         this.calendarRepository = calendarRepository;
-        this.parkingIntervalRepository = repository;
+        this.parkingSessionRepository = repository;
     }
 
     public long getFee() {
-        ParkingInterval parkingInterval = parkingIntervalRepository.find();
+        ParkingSession parkingSession = parkingSessionRepository.find();
 
-        Duration duration = parkingInterval.getTotalDuration();
+        Duration duration = parkingSession.getTotalDuration();
         if (isFreeInterval(duration)) {
             return 0;
         }
 
-        List<DailySession> dailySessions = parkingInterval.getDailySessions();
+        List<DailySession> dailySessions = parkingSession.getDailySessions();
 
         long totalFee = dailySessions.stream()
                 .mapToLong(this::getRegularFeeDuringOnyDay).sum();
