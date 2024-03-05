@@ -22,9 +22,12 @@ public class ParkingFeeCalculator {
         this.parkingSessionRepository = repository;
     }
 
-    public long getFee() {
-        ParkingSession parkingSession = parkingSessionRepository.find();
+    public long getFee(String plate) {
+        ParkingSession parkingSession = parkingSessionRepository.find(plate);
 
+        if (parkingSession == null) {
+            return 0;
+        }
         Duration duration = parkingSession.getTotalDuration();
         if (isFreeInterval(duration)) {
             return 0;

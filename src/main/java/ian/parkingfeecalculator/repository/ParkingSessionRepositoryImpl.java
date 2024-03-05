@@ -2,16 +2,19 @@ package ian.parkingfeecalculator.repository;
 
 import ian.parkingfeecalculator.entity.ParkingSession;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
-    private ParkingSession parkingSession;
+    private Map<String, ParkingSession> parkingSessionMap = new HashMap<>();
 
     @Override
-    public ParkingSession find() {
-        return parkingSession;
+    public ParkingSession find(String plate) {
+        return parkingSessionMap.get(plate);
     }
 
     @Override
     public void save(ParkingSession parkingSession) {
-        this.parkingSession = parkingSession;
+        parkingSessionMap.put(parkingSession.getPlate(), parkingSession);
     }
 }
