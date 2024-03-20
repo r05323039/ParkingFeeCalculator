@@ -5,7 +5,6 @@ import ian.parkingfeecalculator.repository.ParkingSessionRepositoryImpl;
 import ian.parkingfeecalculator.repository.TaiwanCalendarRepository;
 import ian.parkingfeecalculator.entity.ParkingSession;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -33,13 +32,14 @@ class ParkingFeeCalculatorTest {
     }
 
     private void given_parking_start(String plate, String startText) {
-        parkingSessionRepository.save(new ParkingSession(plate, LocalDateTime.parse(startText), null));
+        ParkingSession session = ParkingSession.start(plate, LocalDateTime.parse(startText));
+        parkingSessionRepository.save(session);
     }
 
     private void given_parking_end(String plate, String endText) {
-        ParkingSession interval = parkingSessionRepository.find(plate);
-        interval.setEnd(LocalDateTime.parse(endText));
-        parkingSessionRepository.save(interval);
+        ParkingSession session = parkingSessionRepository.find(plate);
+        session.end(LocalDateTime.parse(endText));
+        parkingSessionRepository.save(session);
     }
 
     private void calculate_fee(String plate) {
@@ -157,8 +157,9 @@ class ParkingFeeCalculatorTest {
         calculate_fee("AB-1234");
         assert_fee_is(2400);
     }
+
     @Test
-    void find_not_exist_plate(){
+    void find_not_exist_plate() {
         given_parking_start("AB-1234", "2024-01-06T00:00:00");
         given_parking_end("AB-1234", "2024-01-07T00:00:00");
         calculate_fee("xxxx");
