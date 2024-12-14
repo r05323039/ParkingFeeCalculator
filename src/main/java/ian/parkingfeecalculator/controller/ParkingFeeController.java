@@ -23,4 +23,10 @@ public class ParkingFeeController {
         return ResponseEntity.ok()
                 .body(parkingService.startParking(request));
     }
+
+    @PostMapping("/end")
+    public ResponseEntity<ParkingResponseVo> endParking(@Valid @RequestBody ParkingRequestVo request) {
+        return ResponseEntity.ok()
+                .body(parkingService.endParking(request));
+    }
 }

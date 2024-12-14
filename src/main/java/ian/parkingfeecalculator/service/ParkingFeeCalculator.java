@@ -25,6 +25,10 @@ public class ParkingFeeCalculator {
     public long getFee(String plate) {
         ParkingSession parkingSession = parkingSessionRepository.find(plate);
 
+        return getFee(parkingSession);
+    }
+
+    public long getFee(ParkingSession parkingSession) {
         if (parkingSession == null) {
             return 0;
         }
