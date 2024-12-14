@@ -11,15 +11,17 @@
 
     <groupId>ian</groupId>
     <artifactId>parking-portal</artifactId>
-    <version>1.0.0</version>
+    <version>${parking.version}</version>
     <packaging>pom</packaging>
 
     <properties>
         <java.version>17</java.version>
+        <parking.version>1.0.0</parking.version>
     </properties>
 
     <modules>
         <module>parking-entity</module>
+        <module>parking-repository</module>
         <module>parking-web</module>
     </modules>
 
@@ -29,13 +31,19 @@
             <dependency>
                 <groupId>ian</groupId>
                 <artifactId>parking-entity</artifactId>
-                <version>1.0.0</version>
+                <version>${parking.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ian</groupId>
+                <artifactId>parking-repository</artifactId>
+                <version>${parking.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ian</groupId>
                 <artifactId>parking-web</artifactId>
-                <version>1.0.0</version>
+                <version>${parking.version}</version>
             </dependency>
 
         </dependencies>
