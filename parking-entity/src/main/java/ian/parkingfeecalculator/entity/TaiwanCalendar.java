@@ -1,4 +1,4 @@
-package parkingfeecalculator.entity;
+package ian.parkingfeecalculator.entity;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
