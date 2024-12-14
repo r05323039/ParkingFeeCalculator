@@ -1,10 +1,11 @@
 package ian.parkingfeecalculator.repository;
 
 import ian.parkingfeecalculator.entity.ParkingSession;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
-
+@Repository
 public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
     private Map<String, ParkingSession> parkingSessionMap = new HashMap<>();
 
