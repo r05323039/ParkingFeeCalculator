@@ -30,19 +30,19 @@
             <dependency>
                 <groupId>ian</groupId>
                 <artifactId>parking-entity</artifactId>
-                <version>${project.version}</version>
+                <version>${version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ian</groupId>
                 <artifactId>parking-repository</artifactId>
-                <version>${project.version}</version>
+                <version>${version}</version>
             </dependency>
 
             <dependency>
                 <groupId>ian</groupId>
                 <artifactId>parking-web</artifactId>
-                <version>${project.version}</version>
+                <version>${version}</version>
             </dependency>
 
         </dependencies>
