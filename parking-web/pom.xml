@@ -17,7 +17,7 @@
 
         <dependency>
             <groupId>ian</groupId>
-            <artifactId>parking-entity</artifactId>
+            <artifactId>parking-repository</artifactId>
         </dependency>
 
         <dependency>
