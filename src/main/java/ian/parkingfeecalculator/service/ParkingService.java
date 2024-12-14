@@ -43,7 +43,7 @@ public class ParkingService {
         parkingSession.setEnd(endTime);
 
         ParkingFeeCalculator taiwanParkingFeeCalculator = new ParkingFeeCalculator(new TaiwanCalendarRepository(), parkingSessionRepository);
-
+        parkingSessionRepository.delete(plate);
         ParkingResponseVo response = new ParkingResponseVo();
         response.setPlate(plate);
         response.setFee(taiwanParkingFeeCalculator.getFee(parkingSession));

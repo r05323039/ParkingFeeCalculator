@@ -18,4 +18,9 @@ public class ParkingSessionRepositoryImpl implements ParkingSessionRepository {
     public void save(ParkingSession parkingSession) {
         parkingSessionMap.put(parkingSession.getPlate(), parkingSession);
     }
+
+    @Override
+    public void delete(String plate) {
+        parkingSessionMap.remove(plate);
+    }
 }
