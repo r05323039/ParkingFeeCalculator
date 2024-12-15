@@ -24,6 +24,29 @@
         <module>parking-web</module>
     </modules>
 
+    <profiles>
+        <!-- 開發環境 -->
+        <profile>
+            <!-- mvn clean package -Pdev -->
+            <id>dev</id>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+            </properties>
+        </profile>
+
+        <!-- 生產環境 -->
+        <profile>
+            <id>prod</id>
+<!-- 無 -P指定profile id時，使用activeByDefault-->
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
     <dependencyManagement>
         <dependencies>
 
