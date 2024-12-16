@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  parking-app:
+    image: parking:1.0
+    container_name: parking_01
+    ports:
+      - 8080:8080
+    volumes:
+      - ./app:/app #註解時，會使用images內/app內的jar包，打開時，本地的/app會覆蓋image的/app
+    restart: always
