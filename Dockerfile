@@ -15,6 +15,14 @@ WORKDIR /app
 
 COPY --from=build-stage /app/parking-web/target/parking-web-1.0.0.jar parking-web-1.0.0.jar
 
+COPY rootfs /app/rootfs
+
+RUN ls -R /app
+
+RUN chmod +x /app/rootfs/script/init.sh
+
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "parking-web-1.0.0.jar"]
+VOLUME ["/app/rootfs"]
+
+ENTRYPOINT ["/bin/sh", "/app/rootfs/script/init.sh"]
