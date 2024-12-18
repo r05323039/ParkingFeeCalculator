@@ -5,8 +5,10 @@ services:
     image: parking:4.0
     container_name: parking4_1
     ports:
-      - 8084:8080
+      - ${SERVER_PORT:-8081}:8080
     volumes:
       - ./rootfs:/rootfs
       - ./rootfs/init.sh:/usr/local/bin/init
+    environment:
+      - FIRST_NAME
     restart: always
