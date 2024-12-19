@@ -1,4 +1,0 @@
- {{ $SERVER_PORT := .Env.SERVER_PORT }}
-
-server:
-  port: {{ $SERVER_PORT }}

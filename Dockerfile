@@ -21,6 +21,4 @@ RUN ls -R /app
 
 EXPOSE 8080
 
-VOLUME ["rootfs"]
-
 ENTRYPOINT ["init"]
