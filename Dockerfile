@@ -21,4 +21,4 @@ RUN ls -R /app
 
 EXPOSE 8080
 
-ENTRYPOINT ["init"]
+ENTRYPOINT ["java","-jar","parking-web-1.0.0.jar"]
